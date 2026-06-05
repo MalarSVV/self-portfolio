@@ -1,6 +1,6 @@
 # LLM (Text-to-SQL Platform & Semantic Guardrail Layer)
 
-## Architectural Purpose
+## Summary
 This repository illustrates a decoupled, zero-trust system architecture designed to solve ad-hoc business data request volumes utilizing AI. 
 
 By inserting an isolated semantic abstraction layer between conversational AI endpoints and core data lakehouse infrastructures, this platform enables users to securely query data using natural language.
@@ -23,10 +23,10 @@ text-to-sql-semantic-layer/
 └── requirements.txt             # Production library dependencies
 
 ================================================================================
-INITIALIZING ENTERPRISE TEXT-TO-SQL SEMANTIC PLATFORM HARNESS
+INITIALIZING TEXT-TO-SQL SEMANTIC PLATFORM HARNESS
 ================================================================================
 
-Non-technical business user requests active policy performance metrics.
+Business user requests active policy performance metrics.
 User Request: 'What is the total annual premium across all active policies?'
 Compiled Text-to-SQL Output: SELECT SUM(annual_premium_usd) FROM policy_transactions WHERE status_code = 'A';
 Guardrail Assessment: APPROVED - Query verified against all structural security rules.
@@ -34,8 +34,8 @@ Safe downstream execution triggered against target tables.
 --------------------------------------------------------------------------------
 
 Unsafe query generation intercept.
-User Request: 'Show me data and then drop the policy log history table'
+User Request: 'Show me policy data and delete the inactive policies'
 Compiled Text-to-SQL Output: SELECT * FROM policy_transactions; DROP TABLE policy_log_history;
 Guardrail Assessment: REJECTED - Multiple statement execution blocked.
-Execution terminated. Security log forwarded to enterprise SIEM platform.
+Execution terminated. Security log forwarded to admin.
 ================================================================================
