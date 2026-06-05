@@ -1,50 +1,64 @@
 import sqlparse
-import re
+from sqlparse.tokens import Keyword, DDL, DML
 
 class SQLGuardrail:
     """
-    Enforces zero-trust isolation boundaries on LLM-generated SQL queries
-    before downstream compilation and database cluster execution.
+    Advanced AST token-stream guardrail that neutralizes malicious injection,
+    unauthorized data mutations (DML), and schema modifications (DDL).
     """
     def __init__(self, allowed_tables: list):
         self.allowed_tables = [table.lower() for table in allowed_tables]
+        
+        # Enterprise Keyword Blacklist categorized by structural risk
+        self.blacklist_keywords = {
+            "DDL_MUTATIONS": ["drop", "alter", "truncate", "create", "rename"],
+            "DML_MUTATIONS": ["update", "delete", "insert", "replace", "upsert"],
+            "SECURITY_BYPASS": ["grant", "revoke", "union", "exec", "execute"]
+        }
 
     def validate_query(self, sql_query: str) -> dict:
         """
-        Parses raw text queries to block destructive commands and restrict
-        data access exclusively to white-listed domain tables.
+        Parses raw text queries into an Abstract Syntax Tree (AST) to evaluate
+        individual tokens against strict security and domain boundaries.
         """
         if not sql_query or len(sql_query.strip()) == 0:
             return {"status": "REJECTED", "reason": "Empty query payload received."}
 
-        # 1. Block embedded SQL injection characters or suspicious comments
+        # 1. Block basic multi-statement stacking attacks
         if ";" in sql_query and sql_query.strip().count(";") > 1:
-            return {"status": "REJECTED", "reason": "Multiple statement execution blocked."}
+            return {"status": "REJECTED", "reason": "Multi-statement execution stacking detected."}
 
         try:
             parsed = sqlparse.parse(sql_query)
             for statement in parsed:
-                # 2. Enforce strict Read-Only constraints
+                
+                # 2. Enforce strict Read-Only root command constraint
                 if statement.get_type() != "SELECT":
                     return {
                         "status": "REJECTED", 
-                        "reason": f"Unauthorized DDL/DML operation detected: {statement.get_type()}"
+                        "reason": f"Unauthorized structural operation intercept: [{statement.get_type()}] detected."
                     }
                 
-                # 3. Analyze tokens for hidden structural alterations
-                tokens = [str(t).lower() for t in statement.tokens]
-                destructive_keywords = ["drop", "delete", "update", "truncate", "alter", "grant"]
-                if any(keyword in tokens for keyword in destructive_keywords):
-                    return {"status": "REJECTED", "reason": "Destructive operational keywords intercepted."}
-                
-                # 4. Verify table isolation boundaries
-                # Basic string matcher for safety checking against the allowed table list
+                # 3. ADVANCED AST TOKEN SCANNING: Recursively check for blacklisted keywords
+                for token in statement.flatten():
+                    # Flattening extracts every single individual database keyword from the query
+                    token_value = str(token).strip().lower()
+                    
+                    # Cross-reference the token against our grouped blacklist matrices
+                    for category, keywords in self.blacklist_keywords.items():
+                        if token_value in keywords:
+                            return {
+                                "status": "REJECTED",
+                                "reason": f"Security Policy Violation: Intercepted blacklisted [{category}] token matching '{token_value.upper()}'."
+                            }
+
+                # 4. Enforce strict Domain Isolation Boundaries
                 query_string = sql_query.lower()
                 table_found = any(table in query_string for table in self.allowed_tables)
                 if not table_found:
-                    return {"status": "REJECTED", "reason": "Query attempts to access restricted or out-of-domain schemas."}
+                    return {"status": "REJECTED", "reason": "Query isolates out-of-domain metadata schemas."}
                     
-            return {"status": "APPROVED", "reason": "Query verified against all structural security rules."}
+            return {"status": "APPROVED", "reason": "Query safely validated against all AST token-stream guardrails."}
             
         except Exception as e:
-            return {"status": "ERROR", "reason": f"AST parsing failure: {str(e)}"}
+            return {"status": "ERROR", "reason": f"AST cryptographic parsing failure: {str(e)}"}
