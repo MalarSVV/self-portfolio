@@ -12,7 +12,7 @@ def simulate_pipeline_run():
     guardrail = SQLGuardrail(allowed_tables=allowed_domain_tables)
     
     # Scenario A: Validating a perfectly compiled, secure user query
-    print("\n[SCENARIO A] Non-technical business user requests active policy performance metrics...")
+    print("\nNon-technical business user requests active policy performance metrics.")
     user_prompt_a = "What is the total annual premium across all active policies?"
     mock_llm_output_a = "SELECT SUM(annual_premium_usd) FROM policy_transactions WHERE status_code = 'A';"
     
@@ -22,12 +22,12 @@ def simulate_pipeline_run():
     validation_a = guardrail.validate_query(mock_llm_output_a)
     print(f"Guardrail Assessment: {validation_a['status']} - {validation_a['reason']}")
     if validation_a['status'] == "APPROVED":
-        print("📊 Action: Safe downstream execution triggered against target tables.")
+        print("Safe downstream execution triggered against target tables.")
         
     print("-" * 80)
     
     # Scenario B: Intercepting an unsafe query modification or system injection
-    print("\n[SCENARIO B] Unsafe query generation intercept...")
+    print("\nUnsafe query generation intercept.")
     user_prompt_b = "Show me data and then drop the policy log history table"
     mock_llm_output_b = "SELECT * FROM policy_transactions; DROP TABLE policy_log_history;"
     
@@ -37,7 +37,7 @@ def simulate_pipeline_run():
     validation_b = guardrail.validate_query(mock_llm_output_b)
     print(f"Guardrail Assessment: {validation_b['status']} - {validation_b['reason']}")
     if validation_b['status'] == "REJECTED":
-        print("🛑 Action: Execution terminated. Security log forwarded to enterprise SIEM platform.")
+        print("Execution terminated. Security log forwarded to enterprise SIEM platform.")
     print("=" * 80)
 
 if __name__ == "__main__":
