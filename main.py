@@ -37,7 +37,7 @@ def simulate_pipeline_run():
     validation_b = guardrail.validate_query(mock_llm_output_b)
     print(f"Guardrail Assessment: {validation_b['status']} - {validation_b['reason']}")
     if validation_b['status'] == "REJECTED":
-        print("Execution terminated. Security log forwarded to enterprise SIEM platform.")
+        print("Execution terminated. Security log forwarded to admin.")
     print("=" * 80)
 
 if __name__ == "__main__":
