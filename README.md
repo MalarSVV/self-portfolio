@@ -14,28 +14,45 @@ By inserting an isolated semantic abstraction layer between conversational AI en
 ## System Component Layout
 ```text
 text-to-sql-semantic-layer/
+│
 ├── config/
-│   └── semantic_manifest.yaml   # Semantic layer configuration and business mapping
+│   └── semantic_manifest.yaml   # Semantic layer configuration and business metadata mapping
+│
+├── data/
+│   └── schema_seed.sql          # Target analytical data warehouse/DB layout blueprint
+│
 ├── src/
-│   ├── __init__.py
-│   └── guardrails.py            # AST checking, table validation, and query screening
-├── main.py                      # Simulation harness executing user data scenarios
-└── requirements.txt             # Production library dependencies
+│   ├── __init__.py              # Package initialization hook
+│   ├── guardrails.py            # Advanced AST token-stream scanner & grouped keyword blacklists
+│   └── llm_agent.py             # Context compiler prompt engine and deterministic mock generation
+│
+├── main.py                      # Multi-scenario integration harness (Happy, DDL, and DML paths)
+├── requirements.txt             # Production dependency tracking matrix
+└── README.md                    # Core documentation system and execution validation logs
+
+## Verified Pipeline Execution Logs
 
 ================================================================================
-INITIALIZING TEXT-TO-SQL SEMANTIC PLATFORM HARNESS
+INITIALIZING TEXT-TO-SQL SEMANTIC GUARDRAIL HARNESS
 ================================================================================
 
-Business user requests active policy performance metrics.
-User Request: 'What is the total annual premium across all active policies?'
-Compiled Text-to-SQL Output: SELECT SUM(annual_premium_usd) FROM policy_transactions WHERE status_code = 'A';
-Guardrail Assessment: APPROVED - Query verified against all structural security rules.
-Safe downstream execution triggered against target tables.
+[SCENARIO A] Business User Requesting Metric Performance Aggregations...
+User Request:  'What is the total annual premium across all active policies?'
+Compiled SQL:  SELECT SUM(annual_premium_usd) FROM policy_transactions WHERE status_code = 'A';
+Policy Action: APPROVED -> Query safely validated against all AST token-stream guardrails.
+Result: Forwarding query token stream directly to downstream database compute nodes.
 --------------------------------------------------------------------------------
 
-Unsafe query generation intercept.
-User Request: 'Show me policy data and delete the inactive policies'
-Compiled Text-to-SQL Output: SELECT * FROM policy_transactions; DROP TABLE policy_log_history;
-Guardrail Assessment: REJECTED - Multiple statement execution blocked.
-Execution terminated. Security log forwarded to admin.
+[SCENARIO B] Adversarial Prompt Injection - Malicious DDL Intercept...
+User Request:  'Show me data and then drop the policy log history table'
+Compiled SQL:  SELECT * FROM policy_transactions; DROP TABLE policy_log_history;
+Policy Action: REJECTED -> Multi-statement execution stacking detected.
+Result: Dropping query connection pipeline immediately. Incident logged.
+--------------------------------------------------------------------------------
+
+[SCENARIO C] Unauthorized Sub-Query Mutation - Data Edit Attempt...
+User Request:  'Show me active policies but update the premium rate of POL-99421 to zero'
+Compiled SQL:  SELECT * FROM policy_transactions WHERE policy_id IN (UPDATE policy_transactions SET annual_premium_usd = 0.00);
+Policy Action: REJECTED -> Security Policy Violation: Intercepted blacklisted [DML_MUTATIONS] token matching 'UPDATE'.
+Result: Write attempt blocked. Conversational AI interface is locked to Read-Only operations.
 ================================================================================
