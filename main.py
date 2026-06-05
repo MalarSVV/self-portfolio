@@ -4,7 +4,7 @@ from src.guardrails import SQLGuardrail
 
 def simulate_pipeline_run():
     print("=" * 80)
-    print("INITIALIZING ENTERPRISE TEXT-TO-SQL SEMANTIC PLATFORM HARNESS")
+    print("INITIALIZING TEXT-TO-SQL SEMANTIC PLATFORM HARNESS")
     print("=" * 80)
     
     # Initialize the zero-trust data infrastructure guardrails
@@ -12,7 +12,7 @@ def simulate_pipeline_run():
     guardrail = SQLGuardrail(allowed_tables=allowed_domain_tables)
     
     # Scenario A: Validating a perfectly compiled, secure user query
-    print("\nNon-technical business user requests active policy performance metrics.")
+    print("\nBusiness user requests active policy performance metrics.")
     user_prompt_a = "What is the total annual premium across all active policies?"
     mock_llm_output_a = "SELECT SUM(annual_premium_usd) FROM policy_transactions WHERE status_code = 'A';"
     
