@@ -34,7 +34,7 @@ Safe downstream execution triggered against target tables.
 --------------------------------------------------------------------------------
 
 Unsafe query generation intercept.
-User Request: 'Show me data and then drop the policy log history table'
+User Request: 'Show me policy data and delete the inactive policies'
 Compiled Text-to-SQL Output: SELECT * FROM policy_transactions; DROP TABLE policy_log_history;
 Guardrail Assessment: REJECTED - Multiple statement execution blocked.
 Execution terminated. Security log forwarded to enterprise SIEM platform.
