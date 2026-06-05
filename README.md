@@ -1,9 +1,9 @@
-# Enterprise LLM Text-to-SQL Platform & Semantic Guardrail Layer
+# LLM (Text-to-SQL Platform & Semantic Guardrail Layer)
 
 ## Architectural Purpose
-This repository provides a production-ready blueprint illustrating a decoupled, zero-trust system architecture designed to solve operational bottlenecks caused by continuous ad-hoc business data request volumes. 
+This repository illustrates a decoupled, zero-trust system architecture designed to solve ad-hoc business data request volumes utilizing AI. 
 
-By inserting an isolated semantic abstraction layer between conversational AI endpoints and core data lakehouse infrastructures, this platform enables non-technical cross-functional stakeholders to securely query enterprise analytics schemas using natural language.
+By inserting an isolated semantic abstraction layer between conversational AI endpoints and core data lakehouse infrastructures, this platform enables users to securely query data using natural language.
 
 ## Core Technical Framework
 * **Semantic Layer Abstraction:** Rather than feeding raw database structures directly to large language models, the platform utilizes a structured `semantic_manifest.yaml` mapping file. This translates physical schema structures into domain business entities, eliminating context drift and preventing model hallucinations.

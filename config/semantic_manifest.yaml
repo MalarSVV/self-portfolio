@@ -1,0 +1,22 @@
+version: 1.0
+platform_context:
+  domain: insurance_operations
+  data_warehouse: snowflake_mock
+  last_updated: "2026-05"
+
+tables:
+  - name: policy_transactions
+    description: Contains historical records of customer insurance policies, premium pricing, and lifecycle tracking.
+    columns:
+      - name: policy_id
+        type: VARCHAR
+        description: Primary key. Unique identifier assigned to an individual insurance contract.
+        synonyms: [policy number, contract id, account number]
+      - name: annual_premium_usd
+        type: FLOAT
+        description: The total annualized premium amount billed to the customer.
+        synonyms: [cost, price, premium, rate, amount paid]
+      - name: status_code
+        type: VARCHAR
+        description: System code indicating current state. Allowed values are 'A' (Active) or 'C' (Cancelled).
+        synonyms: [status, state, active status, is_active]
