@@ -1,6 +1,6 @@
 # LLM (Text-to-SQL Platform & Semantic Guardrail Layer)
 
-## Architectural Purpose
+## Summary
 This repository illustrates a decoupled, zero-trust system architecture designed to solve ad-hoc business data request volumes utilizing AI. 
 
 By inserting an isolated semantic abstraction layer between conversational AI endpoints and core data lakehouse infrastructures, this platform enables users to securely query data using natural language.
