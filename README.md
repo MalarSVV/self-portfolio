@@ -23,10 +23,10 @@ text-to-sql-semantic-layer/
 └── requirements.txt             # Production library dependencies
 
 ================================================================================
-INITIALIZING ENTERPRISE TEXT-TO-SQL SEMANTIC PLATFORM HARNESS
+INITIALIZING TEXT-TO-SQL SEMANTIC PLATFORM HARNESS
 ================================================================================
 
-Non-technical business user requests active policy performance metrics.
+Business user requests active policy performance metrics.
 User Request: 'What is the total annual premium across all active policies?'
 Compiled Text-to-SQL Output: SELECT SUM(annual_premium_usd) FROM policy_transactions WHERE status_code = 'A';
 Guardrail Assessment: APPROVED - Query verified against all structural security rules.
