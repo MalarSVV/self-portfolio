@@ -4,7 +4,7 @@ from src.guardrails import SQLGuardrail
 
 def simulate_pipeline_run():
     print("=" * 80)
-    print("INITIALIZING ADVANCED ENTERPRISE TEXT-TO-SQL SEMANTIC GUARDRAIL HARNESS")
+    print("INITIALIZING TEXT-TO-SQL SEMANTIC GUARDRAIL HARNESS")
     print("=" * 80)
     
     # Initialize zero-trust boundaries
