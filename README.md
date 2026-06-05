@@ -44,7 +44,7 @@ Result: Forwarding query token stream directly to downstream database compute no
 --------------------------------------------------------------------------------
 
 [SCENARIO B] Adversarial Prompt Injection - Malicious DDL Intercept...
-User Request:  'Show me data and then drop the policy log history table'
+User Request:  'Show me policy data and then drop the policy log history table'
 Compiled SQL:  SELECT * FROM policy_transactions; DROP TABLE policy_log_history;
 Policy Action: REJECTED -> Multi-statement execution stacking detected.
 Result: Dropping query connection pipeline immediately. Incident logged.
