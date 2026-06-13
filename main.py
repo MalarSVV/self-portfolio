@@ -6,6 +6,7 @@ def simulate_pipeline_run():
     print("=" * 80)
     print("INITIALIZING TEXT-TO-SQL SEMANTIC GUARDRAIL HARNESS")
     print("=" * 80)
+    print("test")
     
     # Initialize zero-trust boundaries
     allowed_domain_tables = ["policy_transactions"]
